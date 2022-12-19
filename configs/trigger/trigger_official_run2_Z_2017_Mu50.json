@@ -1,0 +1,61 @@
+{
+    "type": "trig",
+    "efficiencies": [
+        ["Mu50_or_OldMu100_or_TkMu100", "CutBasedIdGlobalHighPt_and_TkIsoLoose"]
+    ],
+    "selection": "pt > 52 and tag_IsoMu27==1 and tag_pt > 28.9 and tag_abseta<2.4 and pair_deltaR > 0.3",
+    "definitions": {
+        "CutBasedIdGlobalHighPt_and_TkIsoLoose": "CutBasedIdGlobalHighPt == 1 and TkIsoLoose == 1",
+        "L1SingleMu22_and_CutBasedIdGlobalHighPt_and_TkIsoLoose": "CutBasedIdGlobalHighPt == 1 and TkIsoLoose == 1 and l1ptByQ >= 22 and l1qByQ == 12 and l1drByQ < 0.3",
+        "Mu50_or_OldMu100_or_TkMu100": "Mu50 == 1 or OldMu100 == 1 or TkMu100 == 1"
+    },
+    "binning": {
+        "pt": [52, 56, 60, 120, 200],
+        "abseta": [0, 0.9, 1.2, 2.1, 2.4],
+        "eta": [-2.4, -2.1, -1.2, -0.9, 0, 0.9, 1.2, 2.1, 2.4],
+        "charge": [-2,0,2],
+        "nvtx": "np.array(range(0,30+1))*2 + 0.5",
+        "mass": "np.array(range(60*4, 140*4+1)) * 0.25",
+        "mcMass": "np.array(range(60*4, 140*4+1)) * 0.25"
+    },
+    "variables": {
+        "pt": {"variable": "pair_newTuneP_probe_pt", "pretty": "TuneP p_{T} (GeV)"},
+        "abseta": {"variable": "abseta", "pretty": "|#eta|"},
+        "eta": {"variable": "eta", "pretty": "#eta"},
+        "charge": {"variable": "charge", "pretty": "charge"},
+        "nvtx": {"variable": "tag_nVertices", "pretty": "Number of primary vertices"},
+        "mass": {"variable": "pair_newTuneP_mass", "pretty": "m(#mu#mu) (GeV)"},
+        "mcMass": {"variable": "mcMass", "pretty": "m(#mu#mu) (GeV)"}
+    },
+    "fitVariable": "mass",
+    "fitVariableGen": "mcMass",
+    "binVariables": [
+        ["eta", "pt"],
+        ["charge", "eta", "pt"],
+        ["abseta", "pt"],
+        ["charge", "abseta", "pt"]
+    ],
+    "shifts": {
+    },
+    "fitShifts": {
+        "AltSig": {"fitType": "AltSig"},
+        "massBinUp": {"shiftType": "massBinUp"},
+        "massBinDown": {"shiftType": "massBinDown"},
+        "massRangeUp": {"shiftType": "massRangeUp"},
+        "massRangeDown": {"shiftType": "massRangeDown"}
+    },
+    "systematics" : {
+        "SF": {
+            "fitTypes": ["AltSig"],
+            "shiftTypes": ["massBin", "massRange"]
+        },
+        "dataEff": {
+            "fitTypes": ["AltSig"],
+            "shiftTypes": ["massBin", "massRange"]
+        },
+        "mcEff": {
+            "fitTypes": [],
+            "shiftTypes": ["massRange"]
+        }
+    }
+}

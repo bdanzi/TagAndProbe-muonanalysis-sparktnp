@@ -1,0 +1,62 @@
+{
+    "type": "trig",
+    "efficiencies": [
+        ["IsoMu24_or_IsoTkMu24", "CutBasedIdTight_and_PFIsoTight"],
+        ["IsoMu24_or_IsoTkMu24", "L1SingleMu22_and_CutBasedIdTight_and_PFIsoTight"]
+    ],
+    "selection": "tag_IsoMu24==1 and tag_pt > 25.9 and tag_abseta<2.4 and pair_deltaR > 0.3",
+    "definitions": {
+        "CutBasedIdTight_and_PFIsoTight": "CutBasedIdTight == 1 and PFIsoTight == 1",
+        "L1SingleMu22_and_CutBasedIdTight_and_PFIsoTight": "CutBasedIdTight == 1 and PFIsoTight == 1 and l1ptByQ >= 22 and l1qByQ == 12 and l1drByQ < 0.3",
+        "IsoMu24_or_IsoTkMu24": "IsoMu24==1 or IsoTkMu24==1"
+    },
+    "binning": {
+        "ptsingle": [26, 9999],
+        "pt": [2, 18, 22, 24, 26, 30, 40, 50, 60, 120, 200, 300, 500, 1200],
+        "pt2d": [26, 30, 40, 50, 60, 120, 200, 1200],
+        "abseta": [0, 0.9, 1.2, 2.1, 2.4],
+        "eta": [-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4],
+        "charge": [-2,0,2],
+        "nvtx": "np.array(range(0,30+1))*2 + 0.5",
+        "mass": "np.array(range(60*4, 140*4+1)) * 0.25",
+        "mcMass": "np.array(range(60*4, 140*4+1)) * 0.25"
+    },
+    "variables": {
+        "ptsingle": {"variable": "pt", "pretty": "p_{T} (GeV)"},
+        "pt": {"variable": "pt", "pretty": "p_{T} (GeV)"},
+        "pt2d": {"variable": "pt", "pretty": "p_{T} (GeV)"},
+        "abseta": {"variable": "abseta", "pretty": "|#eta|"},
+        "eta": {"variable": "eta", "pretty": "#eta"},
+        "charge": {"variable": "charge", "pretty": "charge"},
+        "nvtx": {"variable": "tag_nVertices", "pretty": "Number of primary vertices"},
+        "mass": {"variable": "mass", "pretty": "m(#mu#mu) (GeV)"},
+        "mcMass": {"variable": "mcMass", "pretty": "m(#mu#mu) (GeV)"}
+    },
+    "fitVariable": "mass",
+    "fitVariableGen": "mcMass",
+    "binVariables": [
+        ["pt"],
+        ["charge", "pt"],
+        ["ptsingle", "eta"],
+        ["ptsingle", "charge", "eta"],
+        ["ptsingle", "nvtx"]
+    ],
+    "shifts": {
+    },
+    "fitShifts": {
+    },
+    "systematics" : {
+        "SF": {
+            "fitTypes": [],
+            "shiftTypes": []
+        },
+        "dataEff": {
+            "fitTypes": [],
+            "shiftTypes": []
+        },
+        "mcEff": {
+            "fitTypes": [],
+            "shiftTypes": []
+        }
+    }
+}

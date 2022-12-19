@@ -1,0 +1,78 @@
+{
+    "efficiencies": [
+        ["DisplacedID", "dSAMuons"],
+        ["DisplacedID", "dSAMuonsMuMatched"],
+        ["DisplacedIDNoMuonHits", "dSAMuons"],
+        ["DisplacedIDNoMuonStations", "dSAMuons"],
+        ["DisplacedIDNoPtErr", "dSAMuons"],
+        ["DisplacedIDNoChi2", "dSAMuons"]
+    ],
+    "selection": "probe_isMuMatched == 1 and tag_isTight == 1 and tag_pt > 8 and tag_abseta < 2.4 and probe_abseta < 2.4 and HLT_Mu7p5_Track2_Jpsi == 1 and probe_pt > 1",
+    "definitions": {
+        "genTracks": "((probe_pt<20) or (probe_pt>20))",
+        "TrackerMuons": "probe_isTracker == 1",
+        "GlobalMuons": "probe_isGlobal == 1",
+        "TightID": "probe_isTight == 1",
+        "LooseID": "probe_isLoose == 1",
+        "dSAMuons": "probe_isdSA == 1",
+        "dSAMuonsMuMatched": "probe_isdSA == 1 and probe_isMuMatched == 1 and (probe_isTracker == 1 or probe_isGlobal == 1)",
+        "diff_dsa_trk_pt": "probe_dsa_pt - probe_pt",
+        "diff_dsa_gen_pt": "(probe_dsa_pt - genmu2_pt)/(genmu2_pt+0.001)",
+        "diff_trk_gen_pt": "(probe_pt - genmu2_pt)/(genmu2_pt+0.001)",
+        "diff_dsa_trk_eta": "probe_dsa_eta - probe_eta",
+        "diff_dsa_gen_eta": "(probe_dsa_eta - genmu2_eta)/(genmu2_eta+0.001)",
+        "diff_trk_gen_eta": "(probe_eta - genmu2_eta)/(genmu2_eta+0.001)",
+        "diff_dsa_trk_phi": "probe_dsa_phi - probe_phi",
+        "diff_dsa_gen_phi": "(probe_dsa_phi - genmu2_phi)/(genmu2_phi+0.001)",
+        "diff_trk_gen_phi": "(probe_phi - genmu2_phi)/(genmu2_phi+0.001)",
+        "dsa_gen_dphi": "abs(probe_dsa_phi - genmu2_phi)",
+        "dsa_gen_reduced_dphi": "dsa_gen_dphi - 3.141592 * (1 + (dsa_gen_dphi-3.141592)/abs(dsa_gen_dphi-3.141592))",
+        "dsa_gen_deta": "abs(probe_dsa_eta - genmu2_eta)",
+        "diff_dsa_gen_dr": "sqrt(dsa_gen_deta*dsa_gen_deta + dsa_gen_reduced_dphi*dsa_gen_reduced_dphi)",
+        "trk_gen_dphi": "abs(probe_phi - genmu2_phi)",
+        "trk_gen_reduced_dphi": "trk_gen_dphi - 3.141592 * (1 + (trk_gen_dphi-3.141592)/abs(trk_gen_dphi-3.141592))",
+        "trk_gen_deta": "abs(probe_eta - genmu2_eta)",
+        "diff_trk_gen_dr": "sqrt(trk_gen_deta*trk_gen_deta + trk_gen_reduced_dphi*trk_gen_reduced_dphi)",
+        "probe_abseta": "abs(probe_eta)",
+        "tag_abseta": "abs(tag_eta)",
+        "pair_dphi": "abs(tag_phi - probe_phi)",
+        "pair_reduced_dphi": "pair_dphi - 3.141592 * (1 + (pair_dphi-3.141592)/abs(pair_dphi-3.141592))",
+        "pair_deta": "abs(tag_eta - probe_eta)",
+        "pair_dR": "sqrt(pair_deta * pair_deta + pair_reduced_dphi * pair_reduced_dphi)",
+        "gen_pair_dphi": "abs(genmu1_phi - genmu2_phi)",
+        "gen_pair_reduced_dphi": "gen_pair_dphi - 3.141592 * (1 + (gen_pair_dphi-3.141592)/abs(gen_pair_dphi-3.141592))",
+        "gen_pair_deta": "abs(genmu1_eta - genmu2_eta)",
+        "gen_pair_dR": "sqrt(gen_pair_deta * gen_pair_deta + gen_pair_reduced_dphi * gen_pair_reduced_dphi)",
+        "minHits": "(probe_dsa_DTHits > 18 and probe_dsa_CSCHits == 0) or (probe_dsa_muonHits > 12 and probe_dsa_CSCHits > 0)",
+        "ptRes": "(probe_dsa_pterr/probe_dsa_pt < 1.0)",
+        "DisplacedID": "minHits == 1 and probe_dsa_muonStations > 1 and probe_dsa_trkChi2 < 2.5 and ptRes == 1",
+        "DisplacedIDNoMuonHits": "probe_dsa_muonStations > 1 and probe_dsa_trkChi2 < 2.5 and ptRes == 1",
+        "DisplacedIDNoMuonStations": "minHits == 1 and probe_dsa_trkChi2 < 2.5 and ptRes == 1",
+        "DisplacedIDNoPtErr": "minHits == 1 and probe_dsa_muonStations > 1 and probe_dsa_trkChi2 < 2.5",
+        "DisplacedIDNoChi2": "minHits == 1 and probe_dsa_muonStations > 1 and ptRes == 1"
+    },
+    "binning": {
+        "pt": [3, 4, 5, 6, 7, 8, 9, 10, 30],
+        "abseta": [0, 0.9, 1.2, 2.1, 2.4],
+        "eta": [-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4],
+        "mass": "np.array(np.arange(2.8, 3.4, 0.1))",
+        "mcMass": "np.array(np.arange(2.8, 3.4, 0.1))"
+    },
+    "variables": {
+        "pt": {"variable": "probe_pt", "pretty": "p_{T} (GeV)"},
+        "abseta": {"variable": "probe_abseta", "pretty": "|#eta|"},
+        "eta": {"variable": "probe_eta", "pretty": "#eta"},
+        "mass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"},
+        "mcMass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"}
+    },
+    "fitVariable": "mass",
+    "fitVariableGen": "mcMass",
+    "binVariables": [
+        ["abseta", "pt"],
+        ["eta"]
+    ],
+    "shifts": {
+    },
+    "fitShifts": {
+    }
+}

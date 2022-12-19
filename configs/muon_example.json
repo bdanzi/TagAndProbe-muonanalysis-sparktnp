@@ -1,0 +1,39 @@
+{
+    "efficiencies": [
+        ["TightID", "TrackerMuons"],
+        ["TightRelIso", "TightID"]
+    ],
+    "selection": "tag_pt>26 and tag_abseta<2.4 and trigger_filter_2018==1 and tag_relIso04 < 0.2",
+    "definitions": {
+        "trigger_filter_2018": "tag_hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07",
+        "probe_abseta": "abs(probe_eta)",
+        "tag_abseta": "abs(tag_eta)",
+        "TrackerMuons": "probe_isTracker == 1",
+        "TightID": "probe_isTight == 1",
+        "TightRelIso": "probe_relIso04 < 0.15"
+    },
+    "binning": {
+        "pt": [15, 20, 25, 30, 40, 50, 60, 120],
+        "abseta": [0, 0.9, 1.2, 2.1, 2.4],
+        "eta": [-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4],
+        "mass": "np.array(range(60*4, 140*4+1)) * 0.25",
+        "mcMass": "np.array(range(60*4, 140*4+1)) * 0.25"
+    },
+    "variables": {
+        "pt": {"variable": "probe_pt", "pretty": "p_{T} (GeV)"},
+        "abseta": {"variable": "probe_abseta", "pretty": "|#eta|"},
+        "eta": {"variable": "probe_eta", "pretty": "#eta"},
+        "mass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"},
+        "mcMass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"}
+    },
+    "fitVariable": "mass",
+    "fitVariableGen": "mcMass",
+    "binVariables": [
+        ["abseta", "pt"],
+        ["eta"]
+    ],
+    "shifts": {
+    },
+    "fitShifts": {
+    }
+}

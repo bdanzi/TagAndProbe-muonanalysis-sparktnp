@@ -1,0 +1,64 @@
+{
+    "efficiencies": [
+        ["SAMatched", "StandAloneMuons"]
+    ],
+    "selection": "pair_mass > 70 and pair_mass < 115 and tag_pt > 27 and HLT_IsoMu24_v == 1 and tag_relIso04 < 0.15 and tag_isTight == 1 and (tag_charge * probe_charge = -1)",
+    "definitions": {
+        "genTracks": "((probe_pt > 15)) and probe_relIso04 < 0.1",
+        "SAMatched":"probe_pt > 10 and  ( probe_isTrkMatch == 1) and (probe_isSA == 1) and (probe_pt-probe_trkPt)/(probe_trkPt) < 0.02",
+        "genTracksNoQuality": "probe_pt > 15",
+        "TrackerMuons": "probe_isTracker == 1 and probe_pt > 10",
+        "StandAloneMuons": "probe_isSA == 1",
+        "SAnotdSA": "probe_isSA == 1 and probe_isdSA == 0 and probe_pt > 15 and probe_relIso04 < 0.1",
+        "GlobalMuons": "probe_isGlobal == 1",
+        "TightID": "probe_isTight == 1",
+        "LooseID": "probe_isLoose == 1",
+        "dSAMuons": "probe_isdSA == 1",
+        "dSAMuonsMuMatched": "probe_isdSA == 1 and probe_relIso04 < 0.2 and probe_isMuMatched == 1 and (probe_isTracker == 1 or probe_isGlobal == 1)",
+        "probe_abseta": "abs(probe_eta)",
+        "tag_abseta": "abs(tag_eta)"
+    },
+    "binning": {
+       "pt": [7.5, 15 , 22.5, 30, 40, 50, 60, 120, 200],
+        "eta": [-2.4, -2.1, -1.6, -1.1, -0.9, -0.6, -0.3, -0.1, 0.1, 0.3, 0.6, 0.9, 1.1, 1.6, 2.1, 2.4],
+        "nvtx": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65],
+        "mass": "np.array(range(60*4, 140*4+1)) * 0.25",
+        "mcMass": "np.array(range(60*4, 140*4+1)) * 0.25"
+        
+    },
+    "variables": {
+        "pt": {"variable": "probe_pt", "pretty": "muon p_{T} (GeV)"},
+        "eta": {"variable": "probe_eta", "pretty": "muon #eta"},
+        "nvtx": {"variable": "nVertices", "pretty": "N(primary vertices)"},
+        "mass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"},
+        "mcMass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"}
+       
+    },
+    "fitVariable": "mass",
+    "fitVariableGen": "mcMass",
+    "binVariables": [
+        ["pt"],
+        ["eta"],
+        ["nvtx"],
+        ["nvtx", "pt"],
+        ["eta", "pt"]
+    ],
+    "shifts": {
+    },
+    "fitShifts": {
+        "AltSig": {"fitType": "AltSig"},
+        "AltBkg": {"fitType": "AltBkg"},
+        "NominalOld": {"fitType": "NominalOld"},
+        "AltSigOld": {"fitType": "AltSigOld"}
+    },
+    "systematics" : {
+        "SF": {
+            "fitTypes": ["AltSig"],
+            "shiftTypes": ["massBin"]
+        },
+        "dataEff": {
+            "fitTypes": ["AltSig"],
+            "shiftTypes": ["massBin"]
+        }
+    }
+}

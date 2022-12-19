@@ -1,0 +1,9 @@
+universe    = vanilla
+executable  = condor_wrapper.sh
+arguments   = ./run_single_fit.py $(outFName) $(inFName) $(binName) $(templateFName) $(plotDir) $(version) $(histType) $(shiftType) $(resonance) $(effType)
+transfer_input_files = env.sh,TagAndProbeFitter.py,run_single_fit.py,RooCMSShape.cc,RooCMSShape.h,tdrstyle.py,CMS_lumi.py
+output      = /dev/null
+error       = /dev/null
+log         = /dev/null
++JobFlavour = "espresso"
+queue outFName,inFName,binName,templateFName,plotDir,version,histType,shiftType,resonance,effType from joblist_muon_standAloneMuons_Z_Run2022.txt

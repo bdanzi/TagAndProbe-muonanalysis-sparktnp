@@ -238,14 +238,6 @@ To run locally (with 16 threads):
 ```
 
 To submit to condor:
-
-First, do cd to your workspace in `condor_wrapper.sh` and give it execute permissions
-```bash
-$ sed -i "s~ReplaceMe_by_cdWorkdir~cd $PWD~" condor_wrapper.sh
-$ chmod +x condor_wrapper.sh
-```
-
-Build the condor files and submit the jobs to the cluster:
 ```bash
 $ ./tnp_fitter.py fit muon generalTracks Z Run2017_UL configs/muon_pog_official_run2_Z_2017.json --condor
 $ condor_submit condor.sub
@@ -327,3 +319,6 @@ If the two suberas came from different eras, just add the option "--era2":
 ```
 ./tnp_fitter.py compare particle probe resonance era1 configs/muon_example.json --baseDir ./example --subera1 SubEra1 --subera2 SubEra2 --era2 Era2
 ```
+
+
+

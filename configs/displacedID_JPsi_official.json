@@ -1,0 +1,64 @@
+{
+    "efficiencies": [
+        ["DisplacedID", "dSAMuons"]
+    ],
+    "selection": "probe_isMuMatched == 1 and tag_isTight == 1 and tag_pt > 8 and tag_abseta < 2.4 and probe_abseta < 2.4 and HLT_Mu7p5_Track2_Jpsi == 1 and probe_pt > 1",
+    "definitions": {
+        "genTracks": "((probe_pt<20) or (probe_pt>20))",
+        "TrackerMuons": "probe_isTracker == 1",
+        "GlobalMuons": "probe_isGlobal == 1",
+        "TightID": "probe_isTight == 1",
+        "LooseID": "probe_isLoose == 1",
+        "dSAMuons": "probe_isdSA == 1",
+        "dSAMuonsMuMatched": "probe_isdSA == 1 and probe_isMuMatched == 1 and (probe_isTracker == 1 or probe_isGlobal == 1)",
+        "probe_abseta": "abs(probe_eta)",
+        "tag_abseta": "abs(tag_eta)",
+        "minHits": "(probe_dsa_DTHits > 18 and probe_dsa_CSCHits == 0) or (probe_dsa_muonHits > 12 and probe_dsa_CSCHits > 0)",
+        "ptRes": "(probe_dsa_pterr/probe_dsa_pt < 1.0)",
+        "DisplacedID": "minHits == 1 and probe_dsa_muonStations > 1 and probe_dsa_trkChi2 < 2.5 and ptRes == 1"
+    },
+    "binning": {
+        "pt": [3, 4, 5, 6, 7, 8, 9, 10, 30],
+        "abseta": [0, 0.9, 1.2, 2.1, 2.4],
+        "eta": [-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4],
+        "mass": "np.linspace(2.80, 3.40, 60)",
+        "mcMass": "np.linspace(2.80, 3.40, 60)"
+    },
+    "variables": {
+        "pt": {"variable": "probe_pt", "pretty": "p_{T} (GeV)"},
+        "abseta": {"variable": "probe_abseta", "pretty": "|#eta|"},
+        "eta": {"variable": "probe_eta", "pretty": "#eta"},
+        "mass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"},
+        "mcMass": {"variable": "pair_mass", "pretty": "m(#mu#mu) (GeV)"}
+    },
+    "fitVariable": "mass",
+    "fitVariableGen": "mcMass",
+    "binVariables": [
+        ["abseta", "pt"],
+        ["eta"]
+    ],
+    "shifts": {
+    },
+    "fitShifts": {
+        "AltSig": {"fitType": "AltSig"},
+        "AltBkg": {"fitType": "AltBkg"},
+        "massBinUp": {"shiftType": "massBinUp"},
+        "massBinDown": {"shiftType": "massBinDown"},
+        "massRangeUp": {"shiftType": "massRangeUp"},
+        "massRangeDown": {"shiftType": "massRangeDown"}
+    },
+    "systematics" : {
+        "SF": {
+            "fitTypes": ["AltSig"],
+            "shiftTypes": ["massBin", "massRange"]
+        },
+        "dataEff": {
+            "fitTypes": ["AltSig"],
+            "shiftTypes": ["massBin", "massRange"]
+        },
+        "mcEff": {
+            "fitTypes": [],
+            "shiftTypes": ["massRange"]
+        }
+    }
+}
